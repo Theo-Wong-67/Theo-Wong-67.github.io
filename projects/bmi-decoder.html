@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brain-machine interface neural decoder | Theo (Chin Wang) Wong</title>
+  <meta name="description" content="Causal decoder of 2-D hand position from motor cortex spike trains. LDA direction classifier plus direction-specific Kalman filters, 97.54% direction accuracy, 13.2 cm RMSE.">
+  <!-- This file lives in projects/, so paths go up one level with ../ -->
+  <!-- Display font (free substitute for the reference site's paid Industry font) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Same header as index.html, but every link is prefixed with ../ -->
+  <header class="site-header">
+    <div class="header-text">
+      <h1><a href="../index.html">Theo (Chin Wang) Wong</a></h1>
+      <p class="tagline">MSc Biomedical Engineering (Neurotechnology), Imperial College London</p>
+    </div>
+    <nav class="icon-links" aria-label="External links">
+      <!-- Generic line icons. For official brand marks, paste the SVG from simpleicons.org in place of each <svg>. -->
+      <a href="mailto:ccww010801@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      <a href="https://www.linkedin.com/in/theo-wong-5562b3218" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+      <a href="https://github.com/Theo-Wong-67" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/><path d="M14 4l-4 16"/></svg></a>
+      <a href="../assets/cv.pdf" aria-label="CV (PDF)" title="CV" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg></a>
+      <!-- Optional: ORCID / Google Scholar -->
+    </nav>
+  </header>
+
+  <main class="project-page">
+
+    <a href="../index.html#projects" class="back-link">← Back to projects</a>
+
+    <!-- Title block -->
+    <header class="project-header">
+      <h2><span>Brain-machine interface neural decoder</span></h2>
+      <p class="card-meta"><span>2026 · Brain Machine Interfaces module, Imperial College London · Group work</span></p>
+      <div class="card-links">
+        <a href="mailto:ccww010801@gmail.com?subject=Report request: BMI decoder" class="btn">Report on request →</a>
+      </div>
+    </header>
+
+    <!-- Hero figure -->
+    <figure class="hero-figure">
+      <video src="../assets/bmi-decoder-cover.mp4" poster="../assets/bmi-decoder-cover.png" autoplay muted loop playsinline aria-label="The decoder running on held-out trials: spike raster on the left, true and decoded hand paths on the right"></video>
+    </figure>
+
+    <!-- Four blocks in a fixed order so every project page reads the same way -->
+    <section class="section">
+      <h3>Question</h3>
+      <p><span >How to causally estimate a monkey's hand position from 98 motor neurons during an 8-direction centre-out reaching task.</span></p>
+    </section>
+
+    <section class="section">
+      <h3>Approach</h3>
+      <p><span> Spikes are smoothed with an alpha-function kernel (τ = 50 ms) and averaged into 20 ms bins. The reach direction is read from the first 320 ms by linear discriminant analysis with Ledoit-Wolf shrinkage of the covariance, which was needed because there are too many features but few trials per class. The trajectory then is predicted by one of eight direction-specific Kalman filters on position and velocity, with the velocity damped more when the decoded hand is slow so that it stops nearer to the target.</span></p>
+    </section>
+
+    <section class="section">
+      <h3>Results</h3>
+      <p><span> Direction classification reached 97.54% over 12 000 test classifications, with every error to a neighbouring direction, as predicted by the cosine like tuning of motor neurons. End-to-end RMSE was 13.22 ± 1.28 cm, falling to 9.7 to 10.9 cm in every direction once misclassified trials are excluded, so the directions with high error are a classification problem, not a tracking one.</span></p>
+
+      <figure>
+        <img src="../assets/bmi-decoder-confusion.png" alt="Row-normalised confusion matrix of the LDA direction classifier">
+        <figcaption><span>Direction classification.</span></figcaption>
+      </figure>
+
+      <p><span>The remaining error has a shape in time. Pointwise RMSE ramps from about 1 cm at 320 ms as the filter initialises, sits on a plateau near 15 cm from 460 to 660 ms, then climbs steeply to about 30 cm by 740 ms. To isolate the error of the Kalman filter, the error was recomputed on the correctly classified trials. The largest difference was in the plateau in the middle of the trajectories, falling by 4 cm, such that most of the late error is induced by the regressor and not the classifier.</span></p>
+
+      <figure>
+        <img src="../assets/bmi-decoder-rmse-time.png" alt="Pointwise RMSE against time within trial">
+        <figcaption><span>Pointwise RMSE against time within trial. A ramp as the filter initialises, a plateau, then late-stage growth that correct classification (green) does not remove.</span></figcaption>
+      </figure>
+
+      <p><span >Projecting the error onto the reach axis shows where the error lies. Perpendicular to the reach it stays within ±2 cm, so the direction is right. However, along the reach it drifts ahead of the hand to about 25 cm by 740 ms. The cause is speed estimation, the hand peaks near 850 cm/s at 420 ms and is below 50 cm/s by 580 ms, while the decoded hand peaks lower, at about 620 cm/s, never decelerates fully, and is moving again at 280 cm/s while the real hand is still. A constant-velocity model has no notion of a target, and damping scaled to the decoded speed weakens exactly when that estimate is wrong.</span></p>
+
+      <figure>
+        <img src="../assets/bmi-decoder-speed.png" alt="Decoded minus true error along the reach axis, and true versus decoded hand speed">
+        <figcaption><span>Where the late error comes from (correctly classified trials). Left, signed error along the reach axis (blue) and perpendicular to it (grey). Right, true (green) and decoded (red) hand speed; the decoded hand keeps moving after the real one has stopped.</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="section">
+      <h3>What I learned</h3>
+      <p><span>Splitting the error up before trying to reduce it. Breaking RMSE down by direction, by classification outcome, by time within the trial and by axis turned one number into three separate causes, each with its own fix, and showed which one (the endpoint overshoot) the damping had only partly dealt with.</span></p>
+      <p><span> Choose a model by argument, then validate the argument. The theory of cosine tuning says a population vector decoder should work well here, but it did not. Therefore, theory does not always apply on real-life problems, and requires implementation for trial and error.</span></p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <nav class="icon-links" aria-label="External links">
+      <!-- Generic line icons. For official brand marks, paste the SVG from simpleicons.org in place of each <svg>. -->
+      <a href="mailto:ccww010801@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      <a href="https://www.linkedin.com/in/theo-wong-5562b3218" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+      <a href="https://github.com/Theo-Wong-67" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/><path d="M14 4l-4 16"/></svg></a>
+      <a href="../assets/cv.pdf" aria-label="CV (PDF)" title="CV" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg></a>
+      <!-- Optional: ORCID / Google Scholar -->
+    </nav>
+    <p class="copyright">© 2026 Theo Wong</p>
+  </footer>
+
+</body>
+</html>

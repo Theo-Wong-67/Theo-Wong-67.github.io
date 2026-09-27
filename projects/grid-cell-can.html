@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modelling grid cell network under Alzheimer's Disease | Theo (Chin Wang) Wong</title>
+  <meta name="description" content="MSc project. A continuous attractor model of grid cells with synaptic weight scaling and velocity noise as damage parameters, calibrated against published Alzheimer's mouse data.">
+  <!-- This file lives in projects/, so paths go up one level with ../ -->
+  <!-- Display font (free substitute for the reference site's paid Industry font) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Same header as index.html, but every link is prefixed with ../ -->
+  <header class="site-header">
+    <div class="header-text">
+      <h1><a href="../index.html">Theo (Chin Wang) Wong</a></h1>
+      <p class="tagline">MSc Biomedical Engineering (Neurotechnology), Imperial College London</p>
+    </div>
+    <nav class="icon-links" aria-label="External links">
+      <!-- Generic line icons. For official brand marks, paste the SVG from simpleicons.org in place of each <svg>. -->
+      <a href="mailto:ccww010801@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      <a href="https://www.linkedin.com/in/theo-wong-5562b3218" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+      <a href="https://github.com/Theo-Wong-67" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/><path d="M14 4l-4 16"/></svg></a>
+      <a href="../assets/cv.pdf" aria-label="CV (PDF)" title="CV" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg></a>
+      <!-- Optional: ORCID / Google Scholar -->
+    </nav>
+  </header>
+
+  <main class="project-page">
+
+    <a href="../index.html#projects" class="back-link">← Back to projects</a>
+
+    <!-- Title block -->
+    <header class="project-header">
+      <h2><span>Modelling grid cell network under Alzheimer's Disease</span></h2>
+      <p class="card-meta"><span>2026 · MSc individual project, supervised by Prof. Simon Schultz and Jess Yu, Imperial College London</span></p>
+      <div class="card-links">
+        <a href="mailto:ccww010801@gmail.com?subject=Report request: Grid cell network" class="btn">Report on request →</a>
+        <a href="https://github.com/Theo-Wong-67/MSc-Grid-Cell-CAN-Project" class="btn" target="_blank" rel="noopener">Code →</a>
+      </div>
+    </header>
+
+    <!-- Hero figure -->
+    <figure class="hero-figure">
+      <video src="../assets/grid-cell-can-cover.mp4" poster="../assets/grid-cell-can-cover.png" autoplay muted loop playsinline aria-label="Grid cell network activity beside a simulated animal exploring a 75 cm arena"></video>
+    </figure>
+
+    <!-- Four blocks in a fixed order so every project page reads the same way -->
+    <section class="section">
+      <h3>Question</h3>
+      <p><span>Grid cells in the medial entorhinal cortex fire on a hexagonal lattice as an animal moves through space. In an Alzheimer's mouse model, Ying et al. (2023) found that this symmetry degrades, and quantified it as the fraction of cells whose Fourier components sit 60° apart. I wanted to know whether a continuous attractor network could reproduce that loss under two damage mechanisms, a localised patch of weakened synapses (radius R, severity α) and noise on the velocity input (σ<sub>v</sub>/μ<sub>v</sub>), and how the two interact.</span></p>
+    </section>
+
+    <section class="section">
+      <h3>Methods</h3>
+      <p><span>The model is the Burak and Fiete (2009) continuous attractor network, written in MATLAB with periodic boundary conditions and run in a 75 × 75 cm arena to match Ying et al. (2023). Synaptic damage follows Zhi and Cox (2021), a circular patch of radius R in which the weights are scaled by α. Velocity noise comes in two forms, Gaussian white noise (GWN) after Nagaraj and Narayanan (2026) and signal-dependent noise (SDN), both expressed relative to the mean speed</span></p>
+      <p><span>Symmetry is measured with my own implementation of the Fourier pipeline from Ying et al. Each 36 × 36 rate map is zero-padded to 256, normalised by its mean rate and Fourier transformed. The DC peak is notched out of the power spectrum, a Voronoi-shuffle baseline is subtracted, the result is thresholded at 43% of its maximum and the angles between the remaining components are read off from their centroids. A cell counts as grid-like if its adjacent components sit 60° apart, and f<sub>60</sub> is the fraction of cells that do.</span></p>
+      <p><span>The sweeps ran on Imperial's HPC with 400 000 steps per simulation. Velocity noise was swept over 50 levels × 50 seeds, with a finer 19-level band through the transition for both noise laws. The damage plane was 38 values of α × 46 values of R × 8 seeds, repeated at selected noise levels.</span></p>
+    </section>
+
+    <section class="section">
+      <h3>Results</h3>
+      <p><span>Before working on the model, the Fourier pipeline was checked against the published data. It reproduces the component-angle distribution of Ying et al. (2023) to within 2.04% component-count deviation.</span></p>
+
+      <figure>
+        <img src="../assets/grid-cell-can-calibration.png" alt="Component angle and adjacent gap distributions from this pipeline overlaid on Ying et al. 2023">
+        <figcaption><span>Pipeline check. Component angles (left) and adjacent gaps (right) from this pipeline (blue) overlaid on Ying et al. (2023) (grey). Agreement within 2.04% component-count deviation.</span></figcaption>
+      </figure>
+
+      <figure>
+        <img src="../assets/grid-cell-can-vs-ying.png" alt="Rate maps and autocorrelograms of two model cells beside two nTG-a mouse cells from Ying et al.">
+        <figcaption><span>Two model cells (left) beside two recorded nTG-a mouse cells from Ying et al. (right), rate maps above and autocorrelograms below, with grid spacing λ and peak-to-distance ratio P/D.</span></figcaption>
+      </figure>
+
+      <p><span>The damage-only sweep is the control plane, 38 values of α × 46 values of R × 8 seeds. Grid symmetry is robust with f<sub>60</sub> staying near 1 over most of the plane and only collapses when the patch is both severe (α below about 0.2) and larger than about 2λ. In between there is a transition band where hexagonal and square cells coexist, and its boundary moves to weaker damage (larger α) as the patch grows. However, as the patch gets closer to universal damage, transition boundary moves back towards stronger damage (smaller α).</span></p>
+
+      <figure>
+        <img src="../assets/grid-cell-can-control.png" alt="f60 over damage radius R and severity alpha with no velocity noise">
+        <figcaption><span>Damage only, σ<sub>v</sub> = 0. Mean f<sub>60</sub> over 8 seeds for each of 38 α × 46 R conditions (13 980 of 13 984 runs). R inverted and red = degraded, as in the noise planes below. Dashed lines mark R in multiples of the grid spacing λ.</span></figcaption>
+      </figure>
+
+      <p><span>Velocity noise on its own destroys grid symmetry sharply at a critical value. f<sub>60</sub> stays at 1 until σ<sub>v</sub>/μ<sub>v</sub> ≈ 5 and then collapses to 0 within a narrow band for both noise types, with SDN degrading earlier and more gradually than GWN. The f<sub>60</sub> values Ying et al. report for healthy (nTG-y) and disease-model (APP-y, APP-a) mice all fall close to the SDN curve.</span></p>
+
+      <figure>
+        <img src="../assets/grid-cell-can-f60.png" alt="f60 against velocity noise for GWN and SDN, with the Ying et al. mouse group levels marked">
+        <figcaption><span>f<sub>60</sub> against velocity noise for GWN (blue) and SDN (orange). Right panel zooms on the transition; dashed lines mark the f<sub>60</sub> values Ying et al. (2023) report for nTG-y, APP-y and APP-a mice.</span></figcaption>
+      </figure>
+
+      <p><span>With synaptic damage added on top, f<sub>60</sub> falls as the patch grows (larger R) and as its weights weaken (smaller α), and raising the velocity noise enlarges the collapsed region of the R × α plane. So the two insults compound rather than act independently.</span></p>
+
+      <figure>
+        <img src="../assets/grid-cell-can-phase.png" alt="Phase diagrams of f60 over damage radius R and severity α at three velocity noise levels for GWN and SDN">
+        <figcaption><span>f<sub>60</sub> over damage radius R and severity α at three noise levels (σ<sub>v</sub>/μ<sub>v</sub> = 2, 4.65, 4.9), for GWN (top) and SDN (bottom). Dashed lines mark R in multiples of the grid spacing λ.</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="section">
+      <h3>What I learned</h3>
+      <p><span> To validate the instrument before running the experiment. I reimplemented the published analysis and reproduced the released code's results within an acceptable error margin. Both of the serious bugs in this project, a scale manipulation that changed something other than what I intended and a shuffle parameter set to the wrong value, were caught by that replication, not by the code failing. Code that runs is not code that is right.</span></p>
+      <p><span> To design interpretable results. Trajectories were fixed by design rather than random per run, a single control plane was shared by both noise models, and the two noise laws were run on matched mean-power so the only thing that differed between paired runs was the law itself. Most of this was learned through trial and error, running extra results than originally anticipated. Which were great experience in hind-sight.</span></p>
+      <p><span> Choose the result statistic on evidence. The headline is the mean over seeds as the median was about 1.4 times noisier and read systematically high on the healthy side of the plane, and can come in varying trajectory counts depending on pixels. The detection threshold was chosen from a sensitivity sweep and reported alongside the value the original authors used, so a reader can see what depends on it.</span></p>
+      <p><span> Report the limits of the result. The 0.43 threshold calibration rests on a question I could not close, so the report says so instead of under-selling its importance. The comparison with Zhi and Cox (2021) is also presented as indirect, because they measure symmetry in neural-sheet space and I measure it in the arena, and a reader should know that before weighing the two against each other. </span></p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <nav class="icon-links" aria-label="External links">
+      <!-- Generic line icons. For official brand marks, paste the SVG from simpleicons.org in place of each <svg>. -->
+      <a href="mailto:ccww010801@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      <a href="https://www.linkedin.com/in/theo-wong-5562b3218" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+      <a href="https://github.com/Theo-Wong-67" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/><path d="M14 4l-4 16"/></svg></a>
+      <a href="../assets/cv.pdf" aria-label="CV (PDF)" title="CV" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg></a>
+      <!-- Optional: ORCID / Google Scholar -->
+    </nav>
+    <p class="copyright">© 2026 Theo Wong</p>
+  </footer>
+
+</body>
+</html>

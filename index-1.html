@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Shown in the browser tab and in search results -->
+  <title>Theo (Chin Wang) Wong | MSc Biomedical Engineering, Imperial College London</title>
+  <meta name="description" content="Research website of Theo (Chin Wang) Wong, MSc Biomedical Engineering (Neurotechnology) at Imperial College London. Neural decoding, computational modelling and evaluation.">
+  <!-- Display font (free substitute for the reference site's paid Industry font) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+       Left: name + one-line tagline. Right: row of icon links.
+       No nav menu, matching the reference site.
+       ============================================================ -->
+  <header class="site-header">
+    <div class="header-text">
+      <h1><span>Theo (Chin Wang) Wong</span></h1>
+      <p class="tagline"><span>MSc Biomedical Engineering (Neurotechnology), Imperial College London</span></p>
+    </div>
+
+    <!-- Each <a> is a 48px square icon. Keep aria-label so screen readers know what it is. -->
+    <nav class="icon-links" aria-label="External links">
+      <!-- Generic line icons. For official brand marks, paste the SVG from simpleicons.org in place of each <svg>. -->
+      <a href="mailto:ccww010801@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      <a href="https://www.linkedin.com/in/theo-wong-5562b3218" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+      <a href="https://github.com/Theo-Wong-67" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/><path d="M14 4l-4 16"/></svg></a>
+      <a href="assets/cv.pdf" aria-label="CV (PDF)" title="CV" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg></a>
+      <!-- Optional: ORCID / Google Scholar -->
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         1. INTRO
+         Two or three sentences. Who you are, what you work on,
+         what you are looking for.
+         ============================================================ -->
+    <section id="intro" class="section">
+      <p><span>I am Theo, from Hong Kong recently finished MSc Biomedical Engineering in the Neurotechnology stream at Imperial College London, after a BEng in the same subject at the University of Reading. What got me into this field is one question, how the nervous system turns noisy signals into movement and a sense of place, and whether a model of that process can be tested against real recordings rather than made to look right. Outside of work I play games, and what interests me there is the same question from the other side, how a person gets better at a motor skill with practice. I am looking for a PhD starting in 2027 where I can keep working on this, or assist the building of relevant systems.</span></p>
+    </section>
+
+    <!-- ============================================================
+         2. RESEARCH INTERESTS
+         One paragraph, then a short list of themes with a sentence each.
+         ============================================================ -->
+    <section id="interests" class="section">
+      <h2>Research Interests</h2>
+      <p><span>So far my work has been on decoding and modelling neural activity. What I want to do next is apply the same tools to signals from a person using a system, whether that is a BMI, a prosthesis or an XR interface, instead of from an experiment.</span></p>
+
+      <ul class="interest-list">
+        <li>
+          <h3><span>Neural decoding and motor control</span></h3>
+          <p><span class="draft">I have built a causal decoder that turns motor cortex spike trains into reaching trajectories, and modelled how the nervous system estimates the state of a limb and adapts to force fields. I want to find out how much of this carries over to real-time input from the body.</span></p>
+        </li>
+        <li>
+          <h3><span>Evaluating models against data</span></h3>
+          <p><span class="draft">In my MSc project I calibrated a grid cell network against published mouse data, with the acceptance criterion derived from the data rather than picked by hand and the detection threshold chosen from a sweep. I would rather know a comparison is fair first than know it is favourable.</span></p>
+        </li>
+        <li>
+          <h3><span class="draft">Motor learning in interactive systems</span></h3>
+          <p><span class="draft">I have not built an interactive system yet and am learning Unity and C# at the moment. What I want to find out is whether the learning mechanisms I have modelled can be used inside a system that a person practises on, so that the task changes with how their control changes. The aim trainer under Ongoing Work is my first attempt at this, and XR is where I would take it next.</span></p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============================================================
+         2b. ONGOING WORK
+         Short list. One entry per thing in progress, with a status line.
+         Move an entry to a project card once it has results to show.
+         ============================================================ -->
+    <section id="ongoing" class="section">
+      <h2>Ongoing Work</h2>
+      <ul class="interest-list">
+        <li>
+          <h3><span>Continuation and writing up for publication submission</span></h3>
+          <p class="card-meta"><span>Manuscript in preparation, based on the MSc project below.</span></p>
+          <p><span>The MSc report ended with the phase diagrams and the calibration against measured cells. I am now writing this up for submission, tightening the sweep analysis and the parts of the argument that the report left open, which might lead to additional investigations if required to draw proper conclusions.</span></p>
+        </li>
+        <li>
+          <h3><span>Aim trainer with neuromechanical learning</span></h3>
+          <p class="card-meta"><span>Passion project, still an idea, to be built in Unity.</span></p>
+          <p><span> Current aim trainers score the player but do not model how players learn, h. I want to build one that incorporates neuromechanical learning mechanisms, so that the practicing tasks adapt to how a person's motor control actually changes with practice rather than to a fixed set of routine. This can be done in Unity and is underway, and it is the first thing I want to build with the Unity and C# I am learning, as it combines my passion to improve mechanically in video games and knowledge in neuroscience.</span></p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============================================================
+         3. RESEARCH PROJECTS
+         Card grid, newest first. Each <article> is one card.
+         Copy the first <article> block for each additional project.
+         ============================================================ -->
+    <section id="projects" class="section">
+      <h2>Research Projects</h2>
+      <p class="section-intro"><span>My past projects and what I learnt from them.</span></p>
+
+      <div class="card-grid">
+
+        <!-- Card 1 -->
+        <article class="card">
+          <video src="assets/grid-cell-can-cover.mp4" poster="assets/grid-cell-can-cover.png" autoplay muted loop playsinline aria-label="Grid cell network activity beside a simulated animal exploring a 75 cm arena"></video>
+          <div class="card-body">
+            <h3><span>Modelling grid cell network under Alzheimer's Disease</span></h3>
+            <p class="card-meta"><span>2026 · MSc individual project, supervised by Prof. Simon Schultz and Jess Yu, Imperial College London</span></p>
+            <p><span>A continuous attractor model of grid cells (Burak and Fiete, 2009) with two damage mechanisms, a patch of weakened synapses and noise on the velocity input, as a proxy for neurodegeneration in Alzheimer's disease. My Fourier symmetry pipeline reproduces the published mouse data (Ying et al., 2023) to within about 2% component-count deviation, and the model was then swept over damage and noise using HPC to map where grid symmetry breaks.</span></p>
+            <div class="card-links">
+              <a href="projects/grid-cell-can.html" class="btn">Details →</a>
+              <a href="mailto:ccww010801@gmail.com?subject=Report request: Grid cell network" class="btn">Report on request →</a>
+              <a href="https://github.com/Theo-Wong-67/MSc-Grid-Cell-CAN-Project" class="btn" target="_blank" rel="noopener">Code →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card">
+          <video src="assets/bmi-decoder-cover.mp4" poster="assets/bmi-decoder-cover.png" autoplay muted loop playsinline aria-label="The decoder running on held-out trials: spike raster and true versus decoded hand path"></video>
+          <div class="card-body">
+            <h3><span>Brain-machine interface neural decoder</span></h3>
+            <p class="card-meta"><span>2026 · Brain Machine Interfaces module, Imperial College London</span></p>
+            <p><span>A causal MATLAB pipeline that decodes reaching direction and hand trajectory from 98 monkey motor neurons. Kernel-smoothed firing rates in 20 ms bins go into a regularised LDA classifier for direction (97.54% accuracy), then into one of eight direction-specific Kalman filters for position (13.2 cm RMSE over 50/50 cross-validation).</span></p>
+            <div class="card-links">
+              <a href="projects/bmi-decoder.html" class="btn">Details →</a>
+              <a href="mailto:ccww010801@gmail.com?subject=Report request: BMI decoder" class="btn">Report on request →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card">
+          <video src="assets/ecg-filtering-cover.mp4" poster="assets/ecg-filtering-cover.png" autoplay muted loop playsinline aria-label="A noisy synthetic ECG and its wavelet-filtered version scrolling side by side"></video>
+          <div class="card-body">
+            <h3><span>Filtering effects on pathological ECG classification</span></h3>
+            <p class="card-meta"><span>2024 · BEng dissertation, supervised by Prof. Sillas Hadjiloucas, University of Reading</span></p>
+            <p><span> Four filtering methodologies were compared on a synthetic noisy ECG, then arrhythmia was classified on MIT-BIH recordings with PCA, k-means and an RBF SVM (97.85% accuracy), and the classifier was re-run under different noise, filtering and sampling rates to see what it was sensitive to.</span></p>
+            <div class="card-links">
+              <a href="projects/ecg-filtering.html" class="btn">Details →</a>
+              <a href="mailto:ccww010801@gmail.com?subject=Report request: ECG dissertation" class="btn">Report on request →</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. EDUCATION AND EXPERIENCE
+         Vertical timeline, newest first. One <li> per entry.
+         ============================================================ -->
+    <section id="education" class="section">
+      <h2>Education and Experience</h2>
+      <ol class="timeline">
+        <li>
+          <span class="timeline-date"><span>2025 – 2026</span></span>
+          <h3><span>MSc Biomedical Engineering, Neurotechnology stream</span></h3>
+          <p><span>Imperial College London. Department of Bioengineering MSc Scholarship.</span></p>
+        </li>
+        <li>
+          <span class="timeline-date"><span>2022 – 2024</span></span>
+          <h3><span>BEng Biomedical Engineering</span></h3>
+          <p><span>University of Reading. First Class Honours.</span></p>
+        </li>
+        <li>
+          <span class="timeline-date"><span>2021</span></span>
+          <h3><span>Quality assurance intern</span></h3>
+          <p><span>Hong Kong and China Gas Company. Contributed to the design of a VR safety-training toolkit for site engineers, helping develop its interactive tasks.</span></p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============================================================
+         6. CONTACT
+         Plain links. No form, so no backend is needed.
+         ============================================================ -->
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <p><span>If any additional information wanted, please do not hesitate and drop me an email.</span></p>
+      <p>
+        <a href="mailto:ccww010801@gmail.com">ccww010801@gmail.com</a> ·
+        <a href="https://www.linkedin.com/in/theo-wong-5562b3218" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       Same icon row as the header, plus a copyright line.
+       ============================================================ -->
+  <footer class="site-footer">
+    <nav class="icon-links" aria-label="External links">
+      <!-- Generic line icons. For official brand marks, paste the SVG from simpleicons.org in place of each <svg>. -->
+      <a href="mailto:ccww010801@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      <a href="https://www.linkedin.com/in/theo-wong-5562b3218" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+      <a href="https://github.com/Theo-Wong-67" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/><path d="M14 4l-4 16"/></svg></a>
+      <a href="assets/cv.pdf" aria-label="CV (PDF)" title="CV" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg></a>
+      <!-- Optional: ORCID / Google Scholar -->
+    </nav>
+    <p class="copyright">© 2026 Theo (Chin Wang) Wong</p>
+  </footer>
+
+</body>
+</html>

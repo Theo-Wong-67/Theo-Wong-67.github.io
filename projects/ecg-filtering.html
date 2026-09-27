@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtering effects on pathological ECG classification | Theo (Chin Wang) Wong</title>
+  <meta name="description" content="BEng dissertation. Filter comparison on synthetic noisy ECG, a simulated myopericarditis dataset with STFT features, and arrhythmia classification on MIT-BIH with PCA, k-means and an RBF SVM.">
+  <!-- This file lives in projects/, so paths go up one level with ../ -->
+  <!-- Display font (free substitute for the reference site's paid Industry font) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Same header as index.html, but every link is prefixed with ../ -->
+  <header class="site-header">
+    <div class="header-text">
+      <h1><a href="../index.html">Theo (Chin Wang) Wong</a></h1>
+      <p class="tagline">MSc Biomedical Engineering (Neurotechnology), Imperial College London</p>
+    </div>
+    <nav class="icon-links" aria-label="External links">
+      <!-- Generic line icons. For official brand marks, paste the SVG from simpleicons.org in place of each <svg>. -->
+      <a href="mailto:ccww010801@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      <a href="https://www.linkedin.com/in/theo-wong-5562b3218" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+      <a href="https://github.com/Theo-Wong-67" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/><path d="M14 4l-4 16"/></svg></a>
+      <a href="../assets/cv.pdf" aria-label="CV (PDF)" title="CV" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg></a>
+      <!-- Optional: ORCID / Google Scholar -->
+    </nav>
+  </header>
+
+  <main class="project-page">
+
+    <a href="../index.html#projects" class="back-link">← Back to projects</a>
+
+    <!-- Title block -->
+    <header class="project-header">
+      <h2><span>Filtering effects on pathological ECG classification</span></h2>
+      <p class="card-meta"><span>Sept 2023 – July 2024 · BEng dissertation, supervised by Prof. Sillas Hadjiloucas, University of Reading</span></p>
+      <div class="card-links">
+        <a href="mailto:ccww010801@gmail.com?subject=Report request: ECG dissertation" class="btn">Report on request →</a>
+      </div>
+    </header>
+
+    <!-- Hero figure -->
+    <figure class="hero-figure">
+      <video src="../assets/ecg-filtering-cover.mp4" poster="../assets/ecg-filtering-cover.png" autoplay muted loop playsinline aria-label="A noisy synthetic ECG sweeping across the top panel and the wavelet-filtered signal underneath"></video>
+    </figure>
+
+    <!-- Four blocks in a fixed order so every project page reads the same way -->
+    <section class="section">
+      <h3>Question</h3>
+      <p><span>Can the ECG changes reported in myopericarditis be picked up by an SVM classifier, and how much does the choice of pre-processing filter matter to the features provided to the classifier.</span></p>
+    </section>
+
+    <section class="section">
+      <h3>Approach</h3>
+      <p><span>Three separate short studies in MATLAB. Four filter (Butterworth, FIR, Bessel, wavelet) methodologies were compared on a synthetic ECG with 20 dB injected noise, scored by cross-correlation with the clean signal. A 1 000-signal simulated myopericarditis set, built from the literature's reported P, R and T-wave changes, was classified from short-time Fourier features with an SVM. Arrhythmia in the MIT-BIH databases was classified from PCA and k-means features of the QRS complexes with an RBF SVM, then re-run under added noise, different filters and a change of sampling rate.</span></p>
+    </section>
+
+    <section class="section">
+      <h3>Results</h3>
+      <p><span>The wavelet filter preserved the pulse best (correlation 0.99 against 0.58 for Butterworth, whose fault was phase shift, not magnitude or shape. At zero-phase it matched at 0.99). The arrhythmia classifier reached 97.85% accuracy and held up under 5 dB of noise, but downsampling from 360 to 128 Hz dropped specificity to 50%, because the QRS window was defined in samples. The simulated myopericarditis classifier reached 84% sensitivity with 100% specificity, on simulated data only.</span></p>
+
+      <figure>
+        <img src="../assets/ecg-filtering-svm.png" alt="RBF SVM decision boundary separating pathological and normal cluster centroids">
+        <figcaption><span>Arrhythmia classification on MIT-BIH data. RBF SVM decision boundary over k-means cluster centroids of QRS principal components, pathological (red) against normal (blue), with held-out test points marked.</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="section">
+      <h3>What I learned</h3>
+      <p><span>This was my first research project and looking back the main problem was the structure. I started with the question of whether myopericarditis can be classified from the ECG, but there was no myopericarditis data to work with, so I ended up simulating the waveform changes from the literature with probabilities and magnitudes I picked myself, and then classifying arrhythmia on real data instead as the closest thing available. Each of the three parts was done properly on its own, but they do not add up to an answer to the original question, and the report cannot say whether the method would work on the condition it was named after.</span></p>
+      <p><span>The validation was also decided after the pipeline was built rather than before. The filters were compared on one synthetic pulse with one type of noise, the best one was picked by correlation with the clean signal, and only two of the four were carried into the classification tests. The robustness tests on noise, sampling rate and segment length were added afterwards as I thought of them. That is how the sampling rate difference between the two MIT-BIH databases (360 Hz and 128 Hz) was only found late instead of being controlled from the start. The accuracy was also measured on cluster centroids and not on records, so it does not say how well the classifier would do on a new patient.</span></p>
+      <p><span>Two smaller things I did learn and still use. When a metric gives a bad number, work out why before changing anything, as the correlation blamed the Butterworth filter's magnitude response when the actual problem was phase shift and a zero-phase pass fixed it. And test against the ways real data can differ, not just added noise, since the classifier survived 5 dB of noise but broke on a change of sampling rate because the QRS window was defined in samples.</span></p>
+      <p><span>In hindsight, the things I would change are the things I did do on the grid cell project two years later. Decide on one question and what evidence would answer it before writing any code, get the real data first or scale the claim down to what a simulation can show, hold out data at the level the claim is made at, and treat checking the analysis against a known reference as the first result rather than something to do at the end.</span></p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <nav class="icon-links" aria-label="External links">
+      <!-- Generic line icons. For official brand marks, paste the SVG from simpleicons.org in place of each <svg>. -->
+      <a href="mailto:ccww010801@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      <a href="https://www.linkedin.com/in/theo-wong-5562b3218" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+      <a href="https://github.com/Theo-Wong-67" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/><path d="M14 4l-4 16"/></svg></a>
+      <a href="../assets/cv.pdf" aria-label="CV (PDF)" title="CV" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg></a>
+      <!-- Optional: ORCID / Google Scholar -->
+    </nav>
+    <p class="copyright">© 2026 Theo Wong</p>
+  </footer>
+
+</body>
+</html>

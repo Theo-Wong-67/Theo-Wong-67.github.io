@@ -1,0 +1,208 @@
+/* ============================================================
+   DESIGN TOKENS
+   Values measured from the reference site (Tailwind "zinc" scale).
+   Change these and the whole site follows.
+   ============================================================ */
+:root {
+  --bg:          #09090b;   /* page background (zinc-950) */
+  --bg-card:     #18181b;   /* card background (zinc-900) */
+  --bg-btn:      #27272a;   /* button background (zinc-800) */
+  --bg-icon:     #1a1a1a;   /* icon square */
+  --text:        #a1a1aa;   /* body text (zinc-400) */
+  --text-strong: #ffffff;   /* headings, links */
+  --ring:        rgba(255, 255, 255, 0.10);
+
+  /* The reference uses a paid font (Industry). Barlow Condensed is a
+     free look-alike, loaded in the <head> from Google Fonts. */
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body:    system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --container: 1280px;
+  --gutter: 16px;
+}
+
+/* Drafted text awaiting your review. Delete this rule once reviewed. */
+.draft { color: #60a5fa; }
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--bg); color-scheme: dark; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--text);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--text-strong);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+p { margin: 0 0 16px; }
+
+a { color: var(--text-strong); }
+
+img, video { display: block; max-width: 100%; height: auto; }
+
+/* Centred column, same on every page */
+.site-header, main, .site-footer {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ============================================================
+   HEADER AND FOOTER
+   ============================================================ */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.site-header h1 { font-size: 20px; font-weight: 600; }
+.site-header h1 a { text-decoration: none; }
+.tagline { font-size: 16px; margin: 0; }
+
+.icon-links { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.icon-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--bg-icon);
+  box-shadow: 0 0 0 1px var(--ring), 0 10px 20px rgba(0, 0, 0, 0.5);
+  color: var(--text-strong);
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.icon-links a:hover { background: var(--bg-btn); }
+.icon-links svg { width: 24px; height: 24px; }
+
+.site-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+.copyright { font-size: 14px; margin: 0; }
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.section { margin-bottom: 64px; }
+
+.section h2 {
+  font-size: 30px;
+  font-weight: 500;
+  margin: 24px 0 16px;
+}
+@media (min-width: 1024px) { .section h2 { font-size: 36px; } }
+
+.section-intro { margin-bottom: 24px; }
+
+/* Research interests list */
+.interest-list { list-style: none; padding: 0; margin: 0; }
+.interest-list li { margin-bottom: 16px; }
+.interest-list h3 { font-size: 22px; font-weight: 700; }
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 768px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+/* Three columns if you ever add a fourth project */
+@media (min-width: 1024px) { .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); } }
+
+.card {
+  background: var(--bg-card);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card img, .card video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid #000;
+}
+
+.card-body { padding: 8px; display: flex; flex-direction: column; flex: 1; }
+.card-body h3 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+.card-meta { font-size: 16px; margin-bottom: 16px; }
+.card-links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: var(--bg-btn);
+  color: var(--text-strong);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.btn:hover { background: #3f3f46; }
+
+/* ============================================================
+   SKILLS AND TIMELINE
+   ============================================================ */
+.skills { margin: 0; }
+.skills dt { font-family: var(--font-display); font-size: 20px; color: var(--text-strong); margin-top: 16px; }
+.skills dd { margin: 4px 0 0; }
+
+.timeline { list-style: none; padding: 0; margin: 0; }
+.timeline li {
+  padding: 16px 0 16px 24px;
+  border-left: 2px solid var(--bg-btn);
+}
+.timeline-date { font-size: 14px; display: block; margin-bottom: 4px; }
+.timeline h3 { font-size: 22px; font-weight: 700; }
+
+/* ============================================================
+   PROJECT DETAIL PAGES
+   ============================================================ */
+.back-link { display: inline-block; font-size: 16px; margin: 8px 0 24px; }
+
+.project-header { margin-bottom: 32px; }
+.project-header h2 { font-size: 36px; font-weight: 700; margin: 0 0 8px; }
+.project-header .card-links { margin-top: 16px; }
+
+.project-page .section h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+
+figure { margin: 0 0 32px; }
+/* Figures are capped and centred; the hero can go wider than the rest */
+figure img, figure video, figcaption { width: 100%; max-width: 720px; margin: 0 auto; }
+.hero-figure img, .hero-figure video, .hero-figure figcaption { max-width: 960px; }
+figcaption { font-size: 14px; margin-top: 8px; }
+
+/* ============================================================
+   SMALL SCREENS
+   ============================================================ */
+@media (max-width: 640px) {
+  .site-header { flex-direction: column; align-items: flex-start; }
+}
