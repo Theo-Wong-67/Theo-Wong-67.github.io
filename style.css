@@ -53,6 +53,15 @@ img, video { display: block; max-width: 100%; height: auto; }
 p, .section-intro, .interest-list, .timeline, .project-summary { max-width: 72ch; }
 .card p { max-width: none; }
 
+/* Running prose is justified with hyphenation so the right edge is even
+   without wide gaps. Lists, cards and captions stay left-aligned. */
+#intro p, .section-intro, .project-page .section p, .project-summary {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+.interest-list p, .timeline p, .card p, figcaption { text-align: left; hyphens: manual; }
+
 /* Centred column, same on every page */
 .site-header, main, .site-footer {
   width: 100%;
