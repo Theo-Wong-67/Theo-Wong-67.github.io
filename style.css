@@ -22,8 +22,8 @@
      recommend. Wider than that and the eye loses its place when it
      jumps back to the start of the next line. */
   --content: 640px;
-  --sidebar: 360px;
-  --gap:     96px;                      /* space between sidebar and content */
+  --sidebar: 320px;
+  --gap:     80px;                      /* space between sidebar and content */
   --pad-top: clamp(48px, 10vh, 96px);   /* top spacing, shrinks on short screens */
   --gutter:  24px;                      /* side padding on phones and tablets */
 }
@@ -90,15 +90,24 @@ img, video { display: block; max-width: 100%; height: auto; }
   .layout {
     max-width: none;
     display: grid;
-    grid-template-columns: 280px minmax(0, var(--content));
-    column-gap: 64px;
-    justify-content: center;   /* centres the two columns as a pair */
+    /* Three columns. The two outer ones share the spare width equally,
+       so the content in the middle sits in the centre of the screen.
+       minmax() stops the left column getting narrower than the sidebar
+       plus the gap. On windows narrower than about 1536px there is not
+       enough room, so the content moves right just enough to fit it. */
+    grid-template-columns:
+      minmax(calc(var(--sidebar) + var(--gap)), 1fr)
+      minmax(0, var(--content))
+      minmax(0, 1fr);
     padding: 0 48px;
   }
 
   .site-header {
     grid-column: 1;
     grid-row: 1 / span 2;   /* runs alongside both the main content and the footer */
+    justify-self: end;      /* pushed against the content instead of the screen edge */
+    width: var(--sidebar);
+    margin-right: var(--gap);
     position: sticky;       /* scrolls normally until it reaches top: 0, then stays put */
     top: 0;
     align-self: start;
@@ -108,14 +117,6 @@ img, video { display: block; max-width: 100%; height: auto; }
 
   main         { grid-column: 2; grid-row: 1; padding-top: var(--pad-top); }
   .site-footer { grid-column: 2; grid-row: 2; }
-}
-
-/* Large screens get the full sidebar width and a wider gap */
-@media (min-width: 1280px) {
-  .layout {
-    grid-template-columns: var(--sidebar) var(--content);
-    column-gap: var(--gap);
-  }
 }
 
 /* ============================================================
@@ -139,7 +140,7 @@ img, video { display: block; max-width: 100%; height: auto; }
     flex-direction: column;
     padding: var(--pad-top) 0 48px;
   }
-  .site-header h1 { font-size: 32px; }
+  .site-header h1 { font-size: 38px; }
   .tagline { font-size: 18px; }
 
   .section-nav {
@@ -150,10 +151,6 @@ img, video { display: block; max-width: 100%; height: auto; }
 
   /* margin-top: auto takes all the spare height, pushing the icons to the bottom */
   .site-header .icon-links { margin-top: auto; padding-top: 32px; }
-}
-
-@media (min-width: 1280px) {
-  .site-header h1 { font-size: 42px; }
 }
 
 .section-nav a {
