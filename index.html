@@ -14,16 +14,30 @@
 </head>
 <body>
 
+  <!-- Wraps the header, main and footer. From 1024px wide, style.css
+       turns this into two columns with the header as a sticky sidebar. -->
+  <div class="layout">
+
   <!-- ============================================================
        HEADER
-       Left: name + one-line tagline. Right: row of icon links.
-       No nav menu, matching the reference site.
+       Name, tagline, section menu and icon links. From 1024px wide
+       this becomes the sticky sidebar on the left (see style.css).
        ============================================================ -->
   <header class="site-header">
     <div class="header-text">
       <h1><span>Theo (Chin Wang) Wong</span></h1>
       <p class="tagline"><span>MSc Biomedical Engineering (Neurotechnology), Imperial College London</span></p>
     </div>
+
+    <!-- Section menu, shown from 1024px wide. nav.js highlights the section on screen. -->
+    <nav class="section-nav" aria-label="Sections">
+      <a href="#intro">About</a>
+      <a href="#interests">Interests</a>
+      <a href="#projects">Projects</a>
+      <a href="#ongoing">Ongoing Work</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
 
     <!-- Each <a> is a 48px square icon. Keep aria-label so screen readers know what it is. -->
     <nav class="icon-links" aria-label="External links">
@@ -204,6 +218,11 @@
     </nav>
     <p class="copyright">© 2026 Theo (Chin Wang) Wong</p>
   </footer>
+
+  </div><!-- /.layout -->
+
+  <!-- Highlights the current section in the sidebar menu -->
+  <script src="nav.js"></script>
 
 </body>
 </html>

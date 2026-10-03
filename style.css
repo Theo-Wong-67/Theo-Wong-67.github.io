@@ -17,8 +17,15 @@
   --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
   --font-body:    system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --container: 1280px;
-  --gutter: 16px;
+  /* Layout. --content is the reading width. At 18px text, 640px holds
+     about 70 to 75 characters per line, the range typography guides
+     recommend. Wider than that and the eye loses its place when it
+     jumps back to the start of the next line. */
+  --content: 640px;
+  --sidebar: 360px;
+  --gap:     96px;                      /* space between sidebar and content */
+  --pad-top: clamp(48px, 10vh, 96px);   /* top spacing, shrinks on short screens */
+  --gutter:  24px;                      /* side padding on phones and tablets */
 }
 
 /* ============================================================
@@ -28,64 +35,158 @@
 
 html { background: var(--bg); color-scheme: dark; }
 
+/* Clicking a sidebar link glides to the section instead of jumping,
+   unless the visitor has turned on reduced motion in their system. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
 body {
   margin: 0;
   font-family: var(--font-body);
   font-size: 18px;
-  line-height: 24px;
+  line-height: 1.6;   /* unitless, so it scales with each element's font size */
   color: var(--text);
 }
+
+/* Text is left-aligned (the browser default). Justified text was removed
+   because browsers justify by stretching the gaps between words, which
+   leaves uneven spacing and makes paragraphs slower to read. */
 
 h1, h2, h3 {
   font-family: var(--font-display);
   color: var(--text-strong);
   letter-spacing: -0.02em;
+  line-height: 1.2;
   margin: 0;
+  text-wrap: balance;   /* a heading that wraps gets lines of similar length */
 }
 
-p { margin: 0 0 16px; }
+p {
+  margin: 0 0 1em;
+  text-wrap: pretty;    /* avoids a single word left alone on the last line */
+}
 
 a { color: var(--text-strong); }
 
+/* Stops subscripts like f60 from pushing their line away from the next one */
+sub, sup { line-height: 0; }
+
 img, video { display: block; max-width: 100%; height: auto; }
 
-/* Prose is capped at a comfortable line length; cards and header stay full width */
-p, .section-intro, .interest-list, .timeline, .project-summary { max-width: 72ch; }
-.card p { max-width: none; }
-
-/* Running prose is justified with hyphenation so the right edge is even
-   without wide gaps. Lists, cards and captions stay left-aligned. */
-#intro p, .section-intro, .project-page .section p, .project-summary {
-  text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
-}
-.interest-list p, .timeline p, .card p, figcaption { text-align: left; hyphens: manual; }
-
-/* Centred column, same on every page */
-.site-header, main, .site-footer {
-  width: 100%;
-  max-width: var(--container);
-  margin: 0 auto;
+/* ============================================================
+   PAGE LAYOUT
+   Phones and tablets: one centred column with the header on top.
+   1024px and wider: two columns. The header becomes a sidebar that
+   stays on screen while the content on the right scrolls.
+   ============================================================ */
+.layout {
+  max-width: calc(var(--content) + 2 * var(--gutter));
+  margin: 0 auto;   /* equal auto margins on both sides centre the column */
   padding: 0 var(--gutter);
 }
 
-/* ============================================================
-   HEADER AND FOOTER
-   ============================================================ */
-.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding-top: 24px;
-  padding-bottom: 24px;
+@media (min-width: 1024px) {
+  .layout {
+    max-width: none;
+    display: grid;
+    grid-template-columns: 280px minmax(0, var(--content));
+    column-gap: 64px;
+    justify-content: center;   /* centres the two columns as a pair */
+    padding: 0 48px;
+  }
+
+  .site-header {
+    grid-column: 1;
+    grid-row: 1 / span 2;   /* runs alongside both the main content and the footer */
+    position: sticky;       /* scrolls normally until it reaches top: 0, then stays put */
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow-y: auto;       /* only matters on very short screens */
+  }
+
+  main         { grid-column: 2; grid-row: 1; padding-top: var(--pad-top); }
+  .site-footer { grid-column: 2; grid-row: 2; }
 }
 
-.site-header h1 { font-size: 20px; font-weight: 600; }
-.site-header h1 a { text-decoration: none; }
-.tagline { font-size: 16px; margin: 0; }
+/* Large screens get the full sidebar width and a wider gap */
+@media (min-width: 1280px) {
+  .layout {
+    grid-template-columns: var(--sidebar) var(--content);
+    column-gap: var(--gap);
+  }
+}
 
+/* ============================================================
+   SIDEBAR (the site header)
+   ============================================================ */
+.site-header { padding: 48px 0 40px; }
+
+/* clamp(min, preferred, max): 8.5vw follows the screen width, kept between 28px and 36px */
+.site-header h1 { font-size: clamp(28px, 8.5vw, 36px); font-weight: 700; }
+.site-header h1 a { text-decoration: none; }
+.tagline { font-size: 17px; margin: 8px 0 0; }
+
+.site-header .icon-links { margin-top: 24px; }
+
+/* Section menu. Hidden on phones and tablets, where visitors just scroll. */
+.section-nav { display: none; }
+
+@media (min-width: 1024px) {
+  .site-header {
+    display: flex;
+    flex-direction: column;
+    padding: var(--pad-top) 0 48px;
+  }
+  .site-header h1 { font-size: 32px; }
+  .tagline { font-size: 18px; }
+
+  .section-nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 56px;
+  }
+
+  /* margin-top: auto takes all the spare height, pushing the icons to the bottom */
+  .site-header .icon-links { margin-top: auto; padding-top: 32px; }
+}
+
+@media (min-width: 1280px) {
+  .site-header h1 { font-size: 42px; }
+}
+
+.section-nav a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: max-content;
+  padding: 8px 0;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+/* The short line in front of each label. It grows on hover and for the
+   section currently on screen (nav.js adds the "active" class). */
+.section-nav a::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.2s;
+}
+.section-nav a:hover,
+.section-nav a.active         { color: var(--text-strong); }
+.section-nav a:hover::before,
+.section-nav a.active::before { width: 64px; }
+
+/* Icon links (sidebar and footer) */
 .icon-links { display: flex; flex-wrap: wrap; gap: 12px; }
 
 .icon-links a {
@@ -107,46 +208,56 @@ p, .section-intro, .interest-list, .timeline, .project-summary { max-width: 72ch
 .icon-links svg { width: 24px; height: 24px; }
 .icon-label { font-size: 11px; line-height: 1; color: var(--text); }
 
+/* ============================================================
+   FOOTER
+   ============================================================ */
 .site-footer {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  padding-top: 48px;
-  padding-bottom: 48px;
+  padding: 48px 0;
 }
 .copyright { font-size: 14px; margin: 0; }
+
+@media (min-width: 1024px) {
+  .site-footer { align-items: flex-start; padding-top: 0; }
+  .site-footer .icon-links { display: none; }   /* the sidebar already shows them */
+}
 
 /* ============================================================
    SECTIONS
    ============================================================ */
-.section { margin-bottom: 64px; }
+.section {
+  margin-bottom: 64px;
+  scroll-margin-top: var(--pad-top);   /* gap above a section after a menu jump */
+}
+@media (min-width: 1024px) { .section { margin-bottom: 80px; } }
 
 .section h2 {
   font-size: 30px;
   font-weight: 500;
-  margin: 24px 0 16px;
+  margin: 0 0 16px;
 }
 @media (min-width: 1024px) { .section h2 { font-size: 36px; } }
 
 .section-intro { margin-bottom: 24px; }
 
-/* Research interests list */
+/* Research interests and ongoing work lists */
 .interest-list { list-style: none; padding: 0; margin: 0; }
-.interest-list li { margin-bottom: 16px; }
-.interest-list h3 { font-size: 22px; font-weight: 700; }
+.interest-list li { margin-bottom: 28px; }
+.interest-list h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
 
 /* ============================================================
    CARDS
+   One card per row, so the text inside a card has the same
+   comfortable width as the rest of the page.
    ============================================================ */
 .card-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 24px;
 }
-@media (min-width: 768px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
-/* Three columns if you ever add a fourth project */
-@media (min-width: 1024px) { .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); } }
 
 .card {
   background: var(--bg-card);
@@ -162,7 +273,7 @@ p, .section-intro, .interest-list, .timeline, .project-summary { max-width: 72ch
   border: 1px solid #000;
 }
 
-.card-body { padding: 8px; display: flex; flex-direction: column; flex: 1; }
+.card-body { padding: 16px 8px 8px; display: flex; flex-direction: column; flex: 1; }
 .card-body h3 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
 .card-meta { font-size: 16px; margin-bottom: 16px; }
 .card-links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -196,11 +307,12 @@ p, .section-intro, .interest-list, .timeline, .project-summary { max-width: 72ch
 }
 .timeline-date { font-size: 14px; display: block; margin-bottom: 4px; }
 .timeline h3 { font-size: 22px; font-weight: 700; }
+.timeline p { margin: 4px 0 0; }
 
 /* ============================================================
    PROJECT DETAIL PAGES
    ============================================================ */
-.back-link { display: inline-block; font-size: 16px; margin: 8px 0 24px; }
+.back-link { display: inline-block; font-size: 16px; margin: 0 0 24px; }
 
 .project-header { margin-bottom: 32px; }
 .project-header h2 { font-size: 36px; font-weight: 700; margin: 0 0 8px; }
@@ -209,15 +321,7 @@ p, .section-intro, .interest-list, .timeline, .project-summary { max-width: 72ch
 
 .project-page .section h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
 
+/* Figures fill the content column, so they line up with the text */
 figure { margin: 0 0 32px; }
-/* Figures are capped and centred; the hero can go wider than the rest */
-figure img, figure video, figcaption { width: 100%; max-width: 720px; margin: 0 auto; }
-.hero-figure img, .hero-figure video, .hero-figure figcaption { max-width: 960px; }
+figure img, figure video { width: 100%; }
 figcaption { font-size: 14px; margin-top: 8px; }
-
-/* ============================================================
-   SMALL SCREENS
-   ============================================================ */
-@media (max-width: 640px) {
-  .site-header { flex-direction: column; align-items: flex-start; }
-}

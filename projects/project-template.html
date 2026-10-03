@@ -14,12 +14,25 @@
 </head>
 <body>
 
+  <!-- Wraps the header, main and footer. From 1024px wide, style.css
+       turns this into two columns with the header as a sticky sidebar. -->
+  <div class="layout">
+
   <!-- Same header as index.html, but every link is prefixed with ../ -->
   <header class="site-header">
     <div class="header-text">
       <h1><a href="../index.html">[Your name]</a></h1>
       <p class="tagline">[Degree, stream, institution]</p>
     </div>
+    <!-- Section menu, shown from 1024px wide. Links go back to the home page. -->
+    <nav class="section-nav" aria-label="Sections">
+      <a href="../index.html#intro">About</a>
+      <a href="../index.html#interests">Interests</a>
+      <a href="../index.html#projects" class="active">Projects</a>
+      <a href="../index.html#ongoing">Ongoing Work</a>
+      <a href="../index.html#education">Education</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
     <nav class="icon-links" aria-label="External links">
       <!-- GitHub mark from simpleicons.org (CC0). Email and CV are generic line icons. LinkedIn is not in Simple Icons; use the official mark from LinkedIn's brand page if wanted. -->
       <a href="mailto:[your email]" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span class="icon-label">Email</span></a>
@@ -94,6 +107,8 @@
     </nav>
     <p class="copyright">© 2026 Theo Wong</p>
   </footer>
+
+  </div><!-- /.layout -->
 
 </body>
 </html>
